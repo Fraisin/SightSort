@@ -2,22 +2,6 @@
   min-height: 100vh;
   background: lightblue;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-}
-.tweet {
-  border: 2px solid black;
-  height: 300px;
-  width: 300px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 30px;
-}
-
-.red {
-  color: red;
-  font-size: 50px;
 }
