@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Autorenew";
+import { mergeSort } from "../SortingAlgorithms/mergeSort.js";
 import "./SortVisualizer.css";
 
 const maxArrayValue = 500;
@@ -63,6 +64,36 @@ export default class SortVisualizer extends React.Component {
     this.refillArray(newValue);
   };
 
+  //Sorting algorithms that call helper methods.
+  quickSort() {}
+  insertionSort() {}
+  bubbleSort() {}
+  selectionSort() {}
+  mergeSort() {}
+  heapSort() {}
+
+  //Tests every implemented sorting algorithm.
+  testSortingAlgorithms() {
+    this.test(mergeSort);
+  }
+
+  //Test for a single sorting algorithm that takes the sorting method as a parameter.
+  test(func) {
+    var numOfTestIterations = 100;
+    var arrayLength = 500;
+    for (var i = 0; i < numOfTestIterations; i++) {
+      var testArray = [];
+      for (var j = 0; j < arrayLength; j++) {
+        testArray.push(getRandomInt(-1000, 1000));
+      }
+      var arrayCopy = testArray.slice().sort(function(a, b) {
+        return a - b;
+      });
+      func(testArray);
+      console.log(arraysEqual(arrayCopy, testArray));
+    }
+  }
+
   render() {
     const { array } = this.state;
     return (
@@ -97,6 +128,9 @@ export default class SortVisualizer extends React.Component {
             size="large"
             startIcon={<RefreshIcon />}
             className="mainBtn"
+            onClick={() => {
+              this.testSortingAlgorithms();
+            }}
           >
             Sort
           </Button>
@@ -121,4 +155,13 @@ export default class SortVisualizer extends React.Component {
 //Generates random integer within the interval [min, max].
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+//Determines if two arrays are equal for testing purposes.
+function arraysEqual(array1, array2) {
+  if (array1.length !== array2.length) return false;
+  for (var i = 0; i < array1.length; i++) {
+    if (array1[i] !== array2[i]) return false;
+  }
+  return true;
 }

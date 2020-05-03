@@ -86,35 +86,24 @@ export default function ScrollableTabsButtonForce() {
       </AppBar>
       <TabPanel className="tab" value={value} index={0}>
         QuickSort is one of the most efficient sorting algorithms and is based
-        on the splitting of an array into smaller ones. The name comes from the
-        fact that, quick sort is capable of sorting a list of data elements
-        significantly faster than any of the common sorting algorithms. And like
-        Merge sort, Quick sort also falls into the category of divide and
-        conquer approach of problem-solving methodology.
+        on the splitting of an array into smaller ones.
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
         This is an in-place comparison-based sorting algorithm. Here, a sub-list
-        is maintained which is always sorted. For example, the lower part of an
-        array is maintained to be sorted. An element which is to be 'insert'ed
-        in this sorted sub-list, has to find its appropriate place and then it
-        has to be inserted there.
+        is maintained which is always sorted.
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
-        Bubble sort is a simple sorting algorithm. This sorting algorithm is
-        comparison-based algorithm in which each pair of adjacent elements is
-        compared and the elements are swapped if they are not in order.
+        This sorting algorithm involves comparing each pair of adjacent elements
+        and swapping them if they are not in order.
       </TabPanel>
       <TabPanel className="tab" value={value} index={3}>
-        This sorting algorithm is an in-place comparison-based algorithm in
-        which the list is divided into two parts, the sorted part at the left
-        end and the unsorted part at the right end. Initially, the sorted part
-        is empty and the unsorted part is the entire list.
+        This sorting algorithm involves dividing the list into two parts: the
+        sorted part at the left end and the unsorted part at the right end.
       </TabPanel>
       <TabPanel className="tab" value={value} index={4}>
-        Merge sort is a divide-and-conquer algorithm based on the idea of
-        breaking down a list into several sub-lists until each sublist consists
-        of a single element and merging those sublists in a manner that results
-        into a sorted list.
+        Merge sort is a divide-and-conquer algorithm that breaks the list into
+        several sub-lists until each sublist consists of a single element and
+        merging those sublists in a manner that results into a sorted list.
       </TabPanel>
       <TabPanel className="tab" value={value} index={5}>
         Heapsort is similar to selection sort—we're repeatedly choosing the
