@@ -1,10 +1,13 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Selector from "./Selector";
 import SortVisualizer from "./SortVisualizer/SortVisualizer";
 
 function App() {
   return (
-    <div className="app">
+    <div>
+      <div className="selector">
+        <Selector />
+      </div>
       <SortVisualizer></SortVisualizer>
     </div>
   );
