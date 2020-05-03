@@ -1,8 +1,8 @@
 import React from "react";
 import "./SortVisualizer.css";
 
-const numOfElements = 100;
 const maxArrayValue = 500;
+const defaultArraySize = 100;
 
 export default class SortVisualizer extends React.Component {
   constructor(props) {
@@ -13,12 +13,12 @@ export default class SortVisualizer extends React.Component {
   }
 
   componentDidMount() {
-    this.refillArray();
+    this.refillArray(defaultArraySize);
   }
 
-  refillArray() {
+  refillArray(length) {
     const array = [];
-    for (let i = 0; i < numOfElements; i++) {
+    for (let i = 0; i < length; i++) {
       array.push(getRandomInt(1, maxArrayValue));
     }
     this.setState({ array });
@@ -34,7 +34,7 @@ export default class SortVisualizer extends React.Component {
             className="arrayBar"
             key={index}
             style={{
-              width: `${75 / numOfElements}%`,
+              width: `${75 / array.length}%`,
               height: `${value / (maxArrayValue / 100)}%`
             }}
           ></div>

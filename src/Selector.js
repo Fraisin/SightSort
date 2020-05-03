@@ -1,10 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import QuickIcon from "@material-ui/icons/FastForwardRounded";
+import InsertIcon from "@material-ui/icons/MenuOpenRounded";
+import BubbleIcon from "@material-ui/icons/BubbleChartRounded";
+import SelectIcon from "@material-ui/icons/ColorizeRounded";
+import MergeIcon from "@material-ui/icons/MergeTypeRounded";
+import HeapIcon from "@material-ui/icons/AccountTreeRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import "./App.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -13,8 +21,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
+      id={`scrollable-force-tabpanel-${index}`}
+      aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -34,24 +42,21 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `vertical-tab-${index}`,
-    "aria-controls": `vertical-tabpanel-${index}`
+    id: `scrollable-force-tab-${index}`,
+    "aria-controls": `scrollable-force-tabpanel-${index}`
   };
 }
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: "flex",
-    height: 225
-  },
-  tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
+    width: "100%",
+    justifyContent: "center",
+    backgroundColor: theme.palette.background.paper
   }
 }));
 
-export default function VerticalTabs() {
+export default function ScrollableTabsButtonForce() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -61,41 +66,61 @@ export default function VerticalTabs() {
 
   return (
     <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        <Tab label="Quick" {...a11yProps(0)} />
-        <Tab label="Insertion" {...a11yProps(1)} />
-        <Tab label="Bubble" {...a11yProps(2)} />
-        <Tab label="Selection" {...a11yProps(3)} />
-        <Tab label="Heap" {...a11yProps(4)} />
-        <Tab label="Merge" {...a11yProps(5)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        Item One
+      <AppBar className="tabsContainer" position="static" color="default">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="on"
+          indicatorColor="primary"
+          textColor="primary"
+          aria-label="scrollable force tabs example"
+        >
+          <Tab label="Quick" icon={<QuickIcon />} {...a11yProps(0)} />
+          <Tab label="Insertion" icon={<InsertIcon />} {...a11yProps(1)} />
+          <Tab label="Bubble" icon={<BubbleIcon />} {...a11yProps(2)} />
+          <Tab label="Selection" icon={<SelectIcon />} {...a11yProps(3)} />
+          <Tab label="Merge" icon={<MergeIcon />} {...a11yProps(4)} />
+          <Tab label="Heap" icon={<HeapIcon />} {...a11yProps(5)} />
+        </Tabs>
+      </AppBar>
+      <TabPanel className="tab" value={value} index={0}>
+        QuickSort is one of the most efficient sorting algorithms and is based
+        on the splitting of an array into smaller ones. The name comes from the
+        fact that, quick sort is capable of sorting a list of data elements
+        significantly faster than any of the common sorting algorithms. And like
+        Merge sort, Quick sort also falls into the category of divide and
+        conquer approach of problem-solving methodology.
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
+      <TabPanel className="tab" value={value} index={1}>
+        This is an in-place comparison-based sorting algorithm. Here, a sub-list
+        is maintained which is always sorted. For example, the lower part of an
+        array is maintained to be sorted. An element which is to be 'insert'ed
+        in this sorted sub-list, has to find its appropriate place and then it
+        has to be inserted there.
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
+      <TabPanel className="tab" value={value} index={2}>
+        Bubble sort is a simple sorting algorithm. This sorting algorithm is
+        comparison-based algorithm in which each pair of adjacent elements is
+        compared and the elements are swapped if they are not in order.
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Four
+      <TabPanel className="tab" value={value} index={3}>
+        This sorting algorithm is an in-place comparison-based algorithm in
+        which the list is divided into two parts, the sorted part at the left
+        end and the unsorted part at the right end. Initially, the sorted part
+        is empty and the unsorted part is the entire list.
       </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
+      <TabPanel className="tab" value={value} index={4}>
+        Merge sort is a divide-and-conquer algorithm based on the idea of
+        breaking down a list into several sub-lists until each sublist consists
+        of a single element and merging those sublists in a manner that results
+        into a sorted list.
       </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
+      <TabPanel className="tab" value={value} index={5}>
+        Heapsort is similar to selection sort—we're repeatedly choosing the
+        largest item and moving it to the end of our array. The main difference
+        is that instead of scanning through the entire array to find the largest
+        item, we convert the array into a max heap to speed things up.
       </TabPanel>
     </div>
   );
