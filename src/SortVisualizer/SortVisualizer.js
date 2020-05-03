@@ -3,10 +3,12 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Autorenew";
-import { mergeSort } from "../SortingAlgorithms/mergeSort.js";
+import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import "./SortVisualizer.css";
 
 const maxArrayValue = 500;
+const VISITED_COLOUR = "#4eccbf";
+const ANIMATION_SPEED_MS = 5;
 
 const PrettoSlider = withStyles({
   root: {
@@ -69,18 +71,44 @@ export default class SortVisualizer extends React.Component {
   insertionSort() {}
   bubbleSort() {}
   selectionSort() {}
-  mergeSort() {}
+  mergeSort() {
+    var visuals = Merge.getVisuals(this.state.array);
+    var arrayBars = document.getElementsByClassName("arrayBar");
+    for (let i = 0; i < visuals.length; i++) {
+      /* Our visual array will look something like the following: [v, v, c, v, v, c, v, v, c ...]
+        where 'v' represents the 2 indices of the array that are currently being visited and 'c' 
+        represents that a bar's height has actually changed. */
+      var changeColour = i % 3 !== 2; //Therefore, we only want to change colours on the 'v's.
+      if (changeColour) {
+        var [barOneIndex, barTwoIndex] = visuals[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = VISITED_COLOUR;
+          barTwoStyle.backgroundColor = VISITED_COLOUR;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // In the case of a 'c', we want to change the height of the specified bar to be the new value.
+        setTimeout(() => {
+          var [barOneIndex, newHeight] = visuals[i];
+          var barOneStyle = arrayBars[barOneIndex].style;
+          barOneStyle.height = `${newHeight / (maxArrayValue / 100)}%`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
   heapSort() {}
 
   //Tests every implemented sorting algorithm.
   testSortingAlgorithms() {
-    this.test(mergeSort);
+    this.test(Merge.mergeSort);
   }
 
   //Test for a single sorting algorithm that takes the sorting method as a parameter.
   test(func) {
     var numOfTestIterations = 100;
     var arrayLength = 500;
+    var visuals = [];
     for (var i = 0; i < numOfTestIterations; i++) {
       var testArray = [];
       for (var j = 0; j < arrayLength; j++) {
@@ -89,7 +117,7 @@ export default class SortVisualizer extends React.Component {
       var arrayCopy = testArray.slice().sort(function(a, b) {
         return a - b;
       });
-      func(testArray);
+      func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
       console.log(arraysEqual(arrayCopy, testArray));
     }
   }
@@ -129,7 +157,7 @@ export default class SortVisualizer extends React.Component {
             startIcon={<RefreshIcon />}
             className="mainBtn"
             onClick={() => {
-              this.testSortingAlgorithms();
+              this.mergeSort();
             }}
           >
             Sort
