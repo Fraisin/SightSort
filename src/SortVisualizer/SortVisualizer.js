@@ -7,6 +7,7 @@ import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import "./SortVisualizer.css";
 
 const maxArrayValue = 500;
+const UNVISITED_COLOUR = "#fad169";
 const VISITED_COLOUR = "#4eccbf";
 const ANIMATION_SPEED_MS = 5;
 
@@ -57,6 +58,11 @@ export default class SortVisualizer extends React.Component {
     const array = [];
     for (let i = 0; i < length; i++) {
       array.push(getRandomInt(1, maxArrayValue));
+    }
+    //Ensure that colours of the bars are back to normal.
+    var arrayBars = document.getElementsByClassName("arrayBar");
+    for (let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = UNVISITED_COLOUR;
     }
     this.setState({ array });
   }
@@ -109,10 +115,10 @@ export default class SortVisualizer extends React.Component {
     var numOfTestIterations = 100;
     var arrayLength = 500;
     var visuals = [];
-    for (var i = 0; i < numOfTestIterations; i++) {
+    for (let i = 0; i < numOfTestIterations; i++) {
       var testArray = [];
-      for (var j = 0; j < arrayLength; j++) {
-        testArray.push(getRandomInt(-1000, 1000));
+      for (let j = 0; j < arrayLength; j++) {
+        testArray.push(getRandomInt(-5000, 5000));
       }
       var arrayCopy = testArray.slice().sort(function(a, b) {
         return a - b;
@@ -188,7 +194,7 @@ function getRandomInt(min, max) {
 //Determines if two arrays are equal for testing purposes.
 function arraysEqual(array1, array2) {
   if (array1.length !== array2.length) return false;
-  for (var i = 0; i < array1.length; i++) {
+  for (let i = 0; i < array1.length; i++) {
     if (array1[i] !== array2[i]) return false;
   }
   return true;
