@@ -8,6 +8,7 @@ import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import * as Quick from "../SortingAlgorithms/quickSort.js";
 import * as Select from "../SortingAlgorithms/selectionSort.js";
+import * as Insert from "../SortingAlgorithms/insertionSort.js";
 import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
@@ -83,6 +84,7 @@ export default class SortVisualizer extends React.Component {
   //Sorting methods that call their respective animation methods.
   beginSort() {
     if (currTab === 0) Quick.performVisualization(this.state.array);
+    if (currTab === 1) Insert.performVisualization(this.state.array);
     if (currTab === 2) Bubble.performVisualization(this.state.array);
     if (currTab === 3) Select.performVisualization(this.state.array);
     if (currTab === 4) Merge.performVisualization(this.state.array);
@@ -91,6 +93,7 @@ export default class SortVisualizer extends React.Component {
   //Tests every implemented sorting algorithm.
   testSortingAlgorithms() {
     this.test(Quick.quickSort, "quick");
+    this.test(Insert.insertionSort, "insert");
     this.test(Bubble.bubbleSort, "bubble");
     this.test(Select.selectionSort, "select");
     this.test(Merge.mergeSort, "merge");
@@ -111,7 +114,11 @@ export default class SortVisualizer extends React.Component {
       });
       if (sortMethod === "merge")
         func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
-      if (sortMethod === "bubble" || sortMethod === "select")
+      if (
+        sortMethod === "bubble" ||
+        sortMethod === "select" ||
+        sortMethod === "insert"
+      )
         func(testArray, visuals);
       if (sortMethod === "quick")
         func(testArray, 0, testArray.length - 1, visuals);
