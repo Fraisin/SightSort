@@ -80,6 +80,7 @@ export default class SortVisualizer extends React.Component {
 
   //Sorting methods that call their respective animation methods.
   beginSort() {
+    if (currTab === 0) Quick.performVisualization(this.state.array);
     if (currTab === 2) Bubble.performVisualization(this.state.array);
     if (currTab === 4) Merge.performVisualization(this.state.array);
   }
