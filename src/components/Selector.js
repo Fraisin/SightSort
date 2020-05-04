@@ -11,8 +11,8 @@ import SelectIcon from "@material-ui/icons/ColorizeRounded";
 import MergeIcon from "@material-ui/icons/MergeTypeRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { setCurrTab } from "./SortVisualizer/SortVisualizer.js";
-import "./App.css";
+import { setCurrTab } from "../SortVisualizer/SortVisualizer.js";
+import "../App.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +55,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function ScrollableTabsButtonForce() {
+export default function Selector() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 

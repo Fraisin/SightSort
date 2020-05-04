@@ -1,5 +1,5 @@
 import React from "react";
-import Selector from "../Selector";
+import Selector from "../components/Selector";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
@@ -9,11 +9,12 @@ import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
-const maxArrayValue = 500;
-const MAIN_COLOUR = "#4eccbf"; //TURQUOISE
-const VISITING_COLOUR = "#fad169"; //HIGHLIGHTER YELLOW
-const ANIMATION_SPEED_MS = 5;
-var currTab = 0;
+//Constants.
+export const MAX_ARRAY_VALUE = 500;
+export const MAIN_COLOUR = "#4eccbf";
+export const HIGHLIGHT_COLOUR = "#fad169";
+export const ANIMATION_SPEED_MS = 5;
+var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
 const PrettoSlider = withStyles({
   root: {
@@ -61,9 +62,9 @@ export default class SortVisualizer extends React.Component {
   refillArray(length) {
     const array = [];
     for (let i = 0; i < length; i++) {
-      array.push(getRandomInt(1, maxArrayValue));
+      array.push(getRandomInt(1, MAX_ARRAY_VALUE));
     }
-    //Ensure that colours of the bars are back to normal.
+    //Ensure that colours of the bars are back to normal upon fresh refill.
     var arrayBars = document.getElementsByClassName("arrayBar");
     for (let i = 0; i < arrayBars.length; i++) {
       arrayBars[i].style.backgroundColor = MAIN_COLOUR;
@@ -81,65 +82,15 @@ export default class SortVisualizer extends React.Component {
     if (currTab === 4) this.mergeSort();
   }
 
-  //Sorting algorithms that call helper methods.
+  //Sorting methods that call their respective animation methods.
   quickSort() {}
   insertionSort() {}
   bubbleSort() {
-    var visuals = Bubble.getVisuals(this.state.array);
-    var arrayBars = document.getElementsByClassName("arrayBar");
-    for (let i = 0; i < visuals.length; i++) {
-      /* The third element of each visual represents what kind of action to take.
-         'v' means we are currently visiting these two indices.
-         'r' means we are finished visiting and should revert back.
-         's' means we should swap these two indices in the array. */
-      var changeColour = visuals[i][2] === "v" || visuals[i][2] === "r";
-      if (changeColour) {
-        var [barOneIndex, barTwoIndex, key] = visuals[i];
-        const barOneStyle = arrayBars[barOneIndex].style;
-        const barTwoStyle = arrayBars[barTwoIndex].style;
-        let colour = key === "v" ? VISITING_COLOUR : MAIN_COLOUR;
-        setTimeout(() => {
-          barOneStyle.backgroundColor = colour;
-          barTwoStyle.backgroundColor = colour;
-        }, i * ANIMATION_SPEED_MS);
-      } else {
-        // In the case of an 's', we want to change the height of the specified bar to be the new value.
-        setTimeout(() => {
-          var barOneIndex = visuals[i][0];
-          var newHeight = visuals[i][1];
-          var barOneStyle = arrayBars[barOneIndex].style;
-          barOneStyle.height = `${newHeight / (maxArrayValue / 100)}%`;
-        }, i * ANIMATION_SPEED_MS);
-      }
-    }
+    Bubble.performVisualization(this.state.array);
   }
   selectionSort() {}
   mergeSort() {
-    var visuals = Merge.getVisuals(this.state.array);
-    var arrayBars = document.getElementsByClassName("arrayBar");
-    for (let i = 0; i < visuals.length; i++) {
-      /* Our visual array will look something like the following: [v, v, c, v, v, c, v, v, c ...]
-        where 'v' represents the 2 indices of the array that are currently being visited and 'c' 
-        represents that a bar's height has actually changed. */
-      var changeColour = i % 3 !== 2; //Therefore, we only want to change colours on the 'v's.
-      if (changeColour) {
-        var [barOneIndex, barTwoIndex] = visuals[i];
-        const barOneStyle = arrayBars[barOneIndex].style;
-        const barTwoStyle = arrayBars[barTwoIndex].style;
-        let colour = i % 3 === 0 ? VISITING_COLOUR : MAIN_COLOUR;
-        setTimeout(() => {
-          barOneStyle.backgroundColor = colour;
-          barTwoStyle.backgroundColor = colour;
-        }, i * ANIMATION_SPEED_MS);
-      } else {
-        // In the case of a 'c', we want to change the height of the specified bar to be the new value.
-        setTimeout(() => {
-          var [barOneIndex, newHeight] = visuals[i];
-          var barOneStyle = arrayBars[barOneIndex].style;
-          barOneStyle.height = `${newHeight / (maxArrayValue / 100)}%`;
-        }, i * ANIMATION_SPEED_MS);
-      }
-    }
+    Merge.performVisualization(this.state.array);
   }
   heapSort() {}
 
@@ -149,7 +100,7 @@ export default class SortVisualizer extends React.Component {
     this.test(Bubble.bubbleSort, "bubble");
   }
 
-  //Test for a single sorting algorithm that takes the sorting method as a parameter.
+  //Test for a single sorting algorithm that takes the sorting method and name as parameters.
   test(func, sortMethod) {
     var numOfTestIterations = 100;
     var arrayLength = 500;
@@ -177,7 +128,7 @@ export default class SortVisualizer extends React.Component {
       <Box display="flex" flexDirection="column" height="100vh">
         <Selector />
         <div className="slider">
-          <h3>Control Array Size</h3>
+          <h3>Array Size</h3>
           <PrettoSlider
             valueLabelDisplay="auto"
             aria-label="Array Size"
@@ -220,7 +171,7 @@ export default class SortVisualizer extends React.Component {
               key={index}
               style={{
                 width: `${75 / array.length}%`,
-                height: `${value / (maxArrayValue / 100)}%`
+                height: `${value / (MAX_ARRAY_VALUE / 100)}%`
               }}
             ></div>
           ))}

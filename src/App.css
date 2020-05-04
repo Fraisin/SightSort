@@ -11,13 +11,7 @@
   justify-content: space-evenly;
   align-items: center;
 }
-/** Desktop Styles **/
-@media only screen and (min-width: 961px) {
-}
-/** Tablet Styles **/
-@media only screen and (min-width: 600px) and (max-width: 960px) {
-}
-/** Mobile Styles **/
+/** Hide description tabs on mobile. **/
 @media only screen and (max-width: 599px) {
   .tab {
     display: None;
