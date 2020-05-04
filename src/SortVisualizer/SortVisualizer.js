@@ -7,6 +7,7 @@ import RefreshIcon from "@material-ui/icons/Autorenew";
 import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import * as Quick from "../SortingAlgorithms/quickSort.js";
+import * as Select from "../SortingAlgorithms/selectionSort.js";
 import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
@@ -14,7 +15,7 @@ import "./SortVisualizer.css";
 export const MAX_ARRAY_VALUE = 500;
 export const MAIN_COLOUR = "#4eccbf";
 export const HIGHLIGHT_COLOUR = "#fad169";
-export const ANIMATION_SPEED_MS = 5;
+export const ANIMATION_SPEED_MS = 500;
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
 const PrettoSlider = withStyles({
@@ -82,14 +83,16 @@ export default class SortVisualizer extends React.Component {
   beginSort() {
     if (currTab === 0) Quick.performVisualization(this.state.array);
     if (currTab === 2) Bubble.performVisualization(this.state.array);
+    if (currTab === 3) Select.performVisualization(this.state.array);
     if (currTab === 4) Merge.performVisualization(this.state.array);
   }
 
   //Tests every implemented sorting algorithm.
   testSortingAlgorithms() {
-    this.test(Merge.mergeSort, "merge");
-    this.test(Bubble.bubbleSort, "bubble");
     this.test(Quick.quickSort, "quick");
+    this.test(Bubble.bubbleSort, "bubble");
+    this.test(Select.selectionSort, "select");
+    this.test(Merge.mergeSort, "merge");
   }
 
   //Test for a single sorting algorithm that takes the sorting method and name as parameters.
@@ -105,18 +108,12 @@ export default class SortVisualizer extends React.Component {
       var arrayCopy = testArray.slice().sort(function(a, b) {
         return a - b;
       });
-      switch (sortMethod) {
-        case "merge":
-          func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
-          break;
-        case "bubble":
-          func(testArray, visuals);
-          break;
-        case "quick":
-          func(testArray, 0, testArray.length - 1);
-          break;
-        default: //Nothing
-      }
+      if (sortMethod === "merge")
+        func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
+      if (sortMethod === "bubble" || sortMethod === "select")
+        func(testArray, visuals);
+      if (sortMethod === "quick")
+        func(testArray, 0, testArray.length - 1, visuals);
       console.log(sortMethod + ": " + arraysEqual(arrayCopy, testArray));
     }
   }
