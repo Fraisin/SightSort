@@ -5,12 +5,13 @@ import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Autorenew";
 import * as Merge from "../SortingAlgorithms/mergeSort.js";
+import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
 const maxArrayValue = 500;
-const UNVISITED_COLOUR = "#fad169";
-const VISITED_COLOUR = "#4eccbf";
+const MAIN_COLOUR = "#4eccbf"; //TURQUOISE
+const VISITING_COLOUR = "#fad169"; //HIGHLIGHTER YELLOW
 const ANIMATION_SPEED_MS = 5;
 var currTab = 0;
 
@@ -65,7 +66,7 @@ export default class SortVisualizer extends React.Component {
     //Ensure that colours of the bars are back to normal.
     var arrayBars = document.getElementsByClassName("arrayBar");
     for (let i = 0; i < arrayBars.length; i++) {
-      arrayBars[i].style.backgroundColor = UNVISITED_COLOUR;
+      arrayBars[i].style.backgroundColor = MAIN_COLOUR;
     }
     this.setState({ array });
   }
@@ -76,13 +77,42 @@ export default class SortVisualizer extends React.Component {
   };
 
   beginSort() {
+    if (currTab === 2) this.bubbleSort();
     if (currTab === 4) this.mergeSort();
   }
 
   //Sorting algorithms that call helper methods.
   quickSort() {}
   insertionSort() {}
-  bubbleSort() {}
+  bubbleSort() {
+    var visuals = Bubble.getVisuals(this.state.array);
+    var arrayBars = document.getElementsByClassName("arrayBar");
+    for (let i = 0; i < visuals.length; i++) {
+      /* The third element of each visual represents what kind of action to take.
+         'v' means we are currently visiting these two indices.
+         'r' means we are finished visiting and should revert back.
+         's' means we should swap these two indices in the array. */
+      var changeColour = visuals[i][2] === "v" || visuals[i][2] === "r";
+      if (changeColour) {
+        var [barOneIndex, barTwoIndex, key] = visuals[i];
+        const barOneStyle = arrayBars[barOneIndex].style;
+        const barTwoStyle = arrayBars[barTwoIndex].style;
+        let colour = key === "v" ? VISITING_COLOUR : MAIN_COLOUR;
+        setTimeout(() => {
+          barOneStyle.backgroundColor = colour;
+          barTwoStyle.backgroundColor = colour;
+        }, i * ANIMATION_SPEED_MS);
+      } else {
+        // In the case of an 's', we want to change the height of the specified bar to be the new value.
+        setTimeout(() => {
+          var barOneIndex = visuals[i][0];
+          var newHeight = visuals[i][1];
+          var barOneStyle = arrayBars[barOneIndex].style;
+          barOneStyle.height = `${newHeight / (maxArrayValue / 100)}%`;
+        }, i * ANIMATION_SPEED_MS);
+      }
+    }
+  }
   selectionSort() {}
   mergeSort() {
     var visuals = Merge.getVisuals(this.state.array);
@@ -96,9 +126,10 @@ export default class SortVisualizer extends React.Component {
         var [barOneIndex, barTwoIndex] = visuals[i];
         const barOneStyle = arrayBars[barOneIndex].style;
         const barTwoStyle = arrayBars[barTwoIndex].style;
+        let colour = i % 3 === 0 ? VISITING_COLOUR : MAIN_COLOUR;
         setTimeout(() => {
-          barOneStyle.backgroundColor = VISITED_COLOUR;
-          barTwoStyle.backgroundColor = VISITED_COLOUR;
+          barOneStyle.backgroundColor = colour;
+          barTwoStyle.backgroundColor = colour;
         }, i * ANIMATION_SPEED_MS);
       } else {
         // In the case of a 'c', we want to change the height of the specified bar to be the new value.
@@ -114,11 +145,12 @@ export default class SortVisualizer extends React.Component {
 
   //Tests every implemented sorting algorithm.
   testSortingAlgorithms() {
-    this.test(Merge.mergeSort);
+    this.test(Merge.mergeSort, "merge");
+    this.test(Bubble.bubbleSort, "bubble");
   }
 
   //Test for a single sorting algorithm that takes the sorting method as a parameter.
-  test(func) {
+  test(func, sortMethod) {
     var numOfTestIterations = 100;
     var arrayLength = 500;
     var visuals = [];
@@ -130,8 +162,12 @@ export default class SortVisualizer extends React.Component {
       var arrayCopy = testArray.slice().sort(function(a, b) {
         return a - b;
       });
-      func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
-      console.log(arraysEqual(arrayCopy, testArray));
+      if (sortMethod === "merge") {
+        func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
+      } else if (sortMethod === "bubble") {
+        func(testArray, visuals);
+      }
+      console.log(sortMethod + ": " + arraysEqual(arrayCopy, testArray));
     }
   }
 
