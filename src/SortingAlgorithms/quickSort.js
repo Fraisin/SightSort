@@ -1,7 +1,5 @@
 import * as SV from "../SortVisualizer/SortVisualizer.js";
 
-const PIVOT_COLOUR = "#f0715d";
-
 export function quickSort(array, start, end, visuals) {
   if (start >= end) return;
   var pIndex = partition(array, start, end, visuals);
@@ -61,7 +59,7 @@ export function performVisualization(array) {
       let colour;
       if (key === "v") colour = SV.HIGHLIGHT_COLOUR;
       if (key === "r") colour = SV.MAIN_COLOUR;
-      if (key === "p") colour = PIVOT_COLOUR;
+      if (key === "p") colour = SV.SPECIAL_HIGHLIGHT;
       setTimeout(() => {
         barOneStyle.backgroundColor = colour;
         barTwoStyle.backgroundColor = colour;

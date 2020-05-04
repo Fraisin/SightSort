@@ -11,9 +11,12 @@ export function selectionSort(array, visuals) {
       visuals.push([i, minIndex, "r"]);
       if (array[i] < array[minIndex]) {
         minIndex = i;
+        //Highlight the minimum index a different colour once changed.
+        visuals.push([minIndex, minIndex, "m"]);
       }
     }
-    // Push the index that needs to be changed as well as its new value.
+    //Push the index that needs to be changed as well as its new value.
+    visuals.push([minIndex, minIndex, "r"]);
     visuals.push([minIndex, array[left], "s"]);
     visuals.push([left, array[minIndex], "s"]);
     var temp = array[minIndex];
@@ -30,13 +33,19 @@ export function performVisualization(array) {
     /* The third element of each visual represents what kind of action to take.
       - 'v' means we are currently visiting these two indices.
       - 'r' means we are finished visiting and should revert back.
+      - 'm' means we should highlight the minimum element found during traversal.
       - 's' means we should swap these two indices in the array. */
-    var changeColour = visuals[i][2] === "v" || visuals[i][2] === "r";
+    var key = visuals[i][2];
+    var changeColour = key === "v" || key === "r" || key === "m";
     if (changeColour) {
-      var [barOneIndex, barTwoIndex, key] = visuals[i];
+      var barOneIndex = visuals[i][0];
+      var barTwoIndex = visuals[i][1];
       const barOneStyle = arrayBars[barOneIndex].style;
       const barTwoStyle = arrayBars[barTwoIndex].style;
-      let colour = key === "v" ? SV.HIGHLIGHT_COLOUR : SV.MAIN_COLOUR;
+      let colour;
+      if (key === "v") colour = SV.HIGHLIGHT_COLOUR;
+      if (key === "r") colour = SV.MAIN_COLOUR;
+      if (key === "m") colour = SV.SPECIAL_HIGHLIGHT;
       setTimeout(() => {
         barOneStyle.backgroundColor = colour;
         barTwoStyle.backgroundColor = colour;

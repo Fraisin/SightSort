@@ -15,7 +15,8 @@ import "./SortVisualizer.css";
 export const MAX_ARRAY_VALUE = 500;
 export const MAIN_COLOUR = "#4eccbf";
 export const HIGHLIGHT_COLOUR = "#fad169";
-export const ANIMATION_SPEED_MS = 500;
+export const SPECIAL_HIGHLIGHT = "#f0715d";
+export const ANIMATION_SPEED_MS = 5;
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
 const PrettoSlider = withStyles({
