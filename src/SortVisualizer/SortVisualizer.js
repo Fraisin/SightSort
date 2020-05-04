@@ -4,12 +4,14 @@ import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Autorenew";
 import * as Merge from "../SortingAlgorithms/mergeSort.js";
+import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
 const maxArrayValue = 500;
 const UNVISITED_COLOUR = "#fad169";
 const VISITED_COLOUR = "#4eccbf";
 const ANIMATION_SPEED_MS = 5;
+var currTab = 0;
 
 const PrettoSlider = withStyles({
   root: {
@@ -72,6 +74,10 @@ export default class SortVisualizer extends React.Component {
     this.refillArray(newValue);
   };
 
+  beginSort() {
+    if (currTab === 4) this.mergeSort();
+  }
+
   //Sorting algorithms that call helper methods.
   quickSort() {}
   insertionSort() {}
@@ -131,7 +137,7 @@ export default class SortVisualizer extends React.Component {
   render() {
     const { array } = this.state;
     return (
-      <div>
+      <Box display="flex" flexDirection="column" height="calc(100vh - 144px)">
         <div className="slider">
           <h3>Control Array Size</h3>
           <PrettoSlider
@@ -163,7 +169,7 @@ export default class SortVisualizer extends React.Component {
             startIcon={<RefreshIcon />}
             className="mainBtn"
             onClick={() => {
-              this.mergeSort();
+              this.beginSort();
             }}
           >
             Sort
@@ -181,7 +187,7 @@ export default class SortVisualizer extends React.Component {
             ></div>
           ))}
         </div>
-      </div>
+      </Box>
     );
   }
 }
@@ -190,7 +196,6 @@ export default class SortVisualizer extends React.Component {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
-
 //Determines if two arrays are equal for testing purposes.
 function arraysEqual(array1, array2) {
   if (array1.length !== array2.length) return false;
@@ -198,4 +203,8 @@ function arraysEqual(array1, array2) {
     if (array1[i] !== array2[i]) return false;
   }
   return true;
+}
+//Sets the tab index so that the correct sorting method can be chosen.
+export function setCurrTab(index) {
+  currTab = index;
 }

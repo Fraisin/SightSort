@@ -9,9 +9,9 @@ import InsertIcon from "@material-ui/icons/MenuOpenRounded";
 import BubbleIcon from "@material-ui/icons/BubbleChartRounded";
 import SelectIcon from "@material-ui/icons/ColorizeRounded";
 import MergeIcon from "@material-ui/icons/MergeTypeRounded";
-import HeapIcon from "@material-ui/icons/AccountTreeRounded";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import { setCurrTab } from "./SortVisualizer/SortVisualizer.js";
 import "./App.css";
 
 function TabPanel(props) {
@@ -51,6 +51,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
+    maxHeight: "144px",
     justifyContent: "center",
     backgroundColor: theme.palette.background.paper
   }
@@ -62,6 +63,7 @@ export default function ScrollableTabsButtonForce() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setCurrTab(newValue);
   };
 
   return (
@@ -81,7 +83,6 @@ export default function ScrollableTabsButtonForce() {
           <Tab label="Bubble" icon={<BubbleIcon />} {...a11yProps(2)} />
           <Tab label="Selection" icon={<SelectIcon />} {...a11yProps(3)} />
           <Tab label="Merge" icon={<MergeIcon />} {...a11yProps(4)} />
-          <Tab label="Heap" icon={<HeapIcon />} {...a11yProps(5)} />
         </Tabs>
       </AppBar>
       <TabPanel className="tab" value={value} index={0}>
@@ -102,14 +103,7 @@ export default function ScrollableTabsButtonForce() {
       </TabPanel>
       <TabPanel className="tab" value={value} index={4}>
         Merge sort is a divide-and-conquer algorithm that breaks the list into
-        several sub-lists until each sublist consists of a single element and
-        merging those sublists in a manner that results into a sorted list.
-      </TabPanel>
-      <TabPanel className="tab" value={value} index={5}>
-        Heapsort is similar to selection sort—we're repeatedly choosing the
-        largest item and moving it to the end of our array. The main difference
-        is that instead of scanning through the entire array to find the largest
-        item, we convert the array into a max heap to speed things up.
+        several sub-lists and merges those sublists to form a sorted list.
       </TabPanel>
     </div>
   );
