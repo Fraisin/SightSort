@@ -1,14 +1,8 @@
 import React from "react";
-import Selector from "./Selector";
 import SortVisualizer from "./SortVisualizer/SortVisualizer";
 
 function App() {
-  return (
-    <div className="appWrapper">
-      <Selector />
-      <SortVisualizer></SortVisualizer>
-    </div>
-  );
+  return <SortVisualizer></SortVisualizer>;
 }
 
 export default App;

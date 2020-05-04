@@ -1,4 +1,5 @@
 import React from "react";
+import Selector from "../Selector";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
@@ -137,7 +138,8 @@ export default class SortVisualizer extends React.Component {
   render() {
     const { array } = this.state;
     return (
-      <Box display="flex" flexDirection="column" height="calc(100vh - 144px)">
+      <Box display="flex" flexDirection="column" height="100vh">
+        <Selector />
         <div className="slider">
           <h3>Control Array Size</h3>
           <PrettoSlider
@@ -160,7 +162,7 @@ export default class SortVisualizer extends React.Component {
               this.refillArray(this.state.currArraySize);
             }}
           >
-            Generate New Array
+            <h3 className="btnHeading">New Array</h3>
           </Button>
           <Button
             variant="contained"
@@ -172,7 +174,7 @@ export default class SortVisualizer extends React.Component {
               this.beginSort();
             }}
           >
-            Sort
+            <h3 className="btnHeading">Sort</h3>
           </Button>
         </div>
         <div className="barContainer">
