@@ -18,8 +18,8 @@ export const MAX_ARRAY_VALUE = 500;
 export const MAIN_COLOUR = "#4eccbf";
 export const HIGHLIGHT_COLOUR = "#fad169";
 export const SPECIAL_HIGHLIGHT = "#f0715d";
-export const ANIMATION_SPEED_MS = 5;
-const FINISHED_GREEN = "#78d680";
+export var ANIMATION_SPEED_MS = 5;
+const FINISHED_GREEN = "#8bc9a4";
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
 //Slider.
@@ -70,8 +70,9 @@ export default class SortVisualizer extends React.Component {
     this.refillArray(this.state.currArraySize);
   }
   //Handle changing of the slider that controls the animation speed.
-  handleSpeedSliderChange = (event, newValue) => {};
-
+  handleSpeedSliderChange = (event, newValue) => {
+    ANIMATION_SPEED_MS = 200 / Math.pow(newValue / 5, 2);
+  };
   //Handle changing of the slider that controls the array size.
   handleArraySliderChange = (event, newValue) => {
     this.setState({ currArraySize: newValue });
@@ -174,12 +175,13 @@ export default class SortVisualizer extends React.Component {
             </div>
             <Slider
               orientation="vertical"
-              defaultValue={30}
-              min={1}
-              max={16}
+              defaultValue={50}
+              min={5}
+              max={100}
               step={0.01}
               aria-label="Speed"
               onChange={this.handleSpeedSliderChange}
+              disabled={this.state.currentlyAnimating}
             />
           </div>
           <div className="sliderBtnsWrapper">
@@ -205,7 +207,7 @@ export default class SortVisualizer extends React.Component {
                 onClick={this.handleNewArrayClick}
                 disabled={this.state.currentlyAnimating}
               >
-                <h3 className="btnHeading">New Array</h3>
+                <h3 className="btnHeading">Reset</h3>
               </Button>
               <Button
                 variant="contained"

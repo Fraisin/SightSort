@@ -9,6 +9,7 @@
 }
 .barContainer {
   width: 95%;
+  height: 100%;
   display: flex;
   flex-grow: 1;
   justify-content: space-around;
