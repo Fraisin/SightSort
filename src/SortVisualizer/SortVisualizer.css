@@ -1,6 +1,9 @@
 .arrayBar {
   background-color: #4eccbf;
 }
+.arraySizeSlider {
+  width: 100%;
+}
 .barContainer {
   width: 95%;
   display: flex;
@@ -15,16 +18,28 @@
 .btnsWrapper {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
-  width: 75%;
-  margin-left: auto;
-  margin-right: auto;
   margin-top: 2%;
 }
-.slider {
-  width: 60%;
+.contentContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+.speedSlider {
+  height: 95%;
+  display: flex;
+}
+.speedLabelWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.sliderBtnsWrapper {
+  width: 60%;
 }
 /** Desktop Styles **/
 @media only screen and (min-width: 961px) {
@@ -54,5 +69,9 @@
   }
   .slider {
     margin-top: 5%;
+  }
+  .speedSlider {
+    height: 90%;
+    display: flex;
   }
 }

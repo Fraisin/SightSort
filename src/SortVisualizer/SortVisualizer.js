@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import RefreshIcon from "@material-ui/icons/Autorenew";
+import SortIcon from "@material-ui/icons/Sort";
 import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import * as Quick from "../SortingAlgorithms/quickSort.js";
@@ -57,7 +58,8 @@ export default class SortVisualizer extends React.Component {
     super(props);
     this.state = {
       currArraySize: 100,
-      array: []
+      array: [],
+      currentlyAnimating: false //Represents whether or not a sorting algorithm is currently being animated.
     };
   }
 
@@ -65,6 +67,23 @@ export default class SortVisualizer extends React.Component {
   componentDidMount() {
     this.refillArray(this.state.currArraySize);
   }
+
+  //Handle changing of the slider.
+  handleChange = (event, newValue) => {
+    this.setState({ currArraySize: newValue });
+    this.refillArray(newValue);
+  };
+
+  //Handle clicking of 'New Array' button.
+  handleNewArrayClick = event => {
+    this.refillArray(this.state.currArraySize);
+  };
+
+  //Handle clicking of 'Sort' butotn.
+  handleSortClick = event => {
+    //this.setState({ currentlyAnimating: true });
+    this.beginSort();
+  };
 
   //Fills the array with 'currArraySize' random elements from 1 -> MAX_ARRAY_VALUE.
   refillArray(length) {
@@ -80,20 +99,6 @@ export default class SortVisualizer extends React.Component {
     this.setState({ array });
   }
 
-  //Handle changing of the slider.
-  handleChange = (event, newValue) => {
-    this.setState({ currArraySize: newValue });
-    this.refillArray(newValue);
-  };
-
-  handleNewArrayClick = event => {
-    this.refillArray(this.state.currArraySize);
-  };
-
-  handleSortClick = event => {
-    this.beginSort();
-  };
-
   //Sorting methods that call their respective animation methods.
   beginSort() {
     if (currTab === 0) Quick.performVisualization(this.state.array);
@@ -101,6 +106,15 @@ export default class SortVisualizer extends React.Component {
     if (currTab === 2) Insert.performVisualization(this.state.array);
     if (currTab === 3) Bubble.performVisualization(this.state.array);
     if (currTab === 4) Select.performVisualization(this.state.array);
+    this.flashGreen();
+  }
+
+  //Turn all the bars green for a brief time after sorting.
+  flashGreen() {
+    var arrayBars = document.getElementsByClassName("arrayBar");
+    for (let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = MAIN_COLOUR;
+    }
   }
 
   //Tests every implemented sorting algorithm.
@@ -145,38 +159,55 @@ export default class SortVisualizer extends React.Component {
     return (
       <Box display="flex" flexDirection="column" height="100vh">
         <Selector />
-        <div className="slider">
-          <h3>Array Size</h3>
-          <PrettoSlider
-            valueLabelDisplay="auto"
-            aria-label="Array Size"
-            defaultValue={100}
-            max={500}
-            min={5}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div className="btnsWrapper">
-          <Button
-            variant="contained"
-            color="secondary"
-            size="large"
-            startIcon={<RefreshIcon />}
-            className="mainBtn"
-            onClick={this.handleNewArrayClick}
-          >
-            <h3 className="btnHeading">New Array</h3>
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            startIcon={<RefreshIcon />}
-            className="mainBtn"
-            onClick={this.handleSortClick}
-          >
-            <h3 className="btnHeading">Sort</h3>
-          </Button>
+        <div className="contentContainer">
+          <div className="speedSlider">
+            <div className="speedLabelWrapper">
+              <h3>Speed</h3>
+            </div>
+            <Slider
+              orientation="vertical"
+              defaultValue={30}
+              aria-label="Speed"
+            />
+          </div>
+          <div className="sliderBtnsWrapper">
+            <div className="arraySizeSlider">
+              <h3>Array Size</h3>
+              <PrettoSlider
+                valueLabelDisplay="auto"
+                aria-label="Array Size"
+                defaultValue={100}
+                max={500}
+                min={5}
+                onChange={this.handleChange}
+                disabled={this.state.currentlyAnimating}
+              />
+            </div>
+            <div className="btnsWrapper">
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                startIcon={<RefreshIcon />}
+                className="mainBtn"
+                onClick={this.handleNewArrayClick}
+                disabled={this.state.currentlyAnimating}
+              >
+                <h3 className="btnHeading">New Array</h3>
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                startIcon={<SortIcon />}
+                className="mainBtn"
+                onClick={this.handleSortClick}
+                disabled={this.state.currentlyAnimating}
+              >
+                <h3 className="btnHeading">Sort</h3>
+              </Button>
+            </div>
+          </div>
         </div>
         <div className="barContainer">
           {array.map((value, index) => (

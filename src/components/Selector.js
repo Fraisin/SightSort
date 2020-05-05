@@ -74,7 +74,6 @@ export default function Selector() {
           scrollButtons="on"
           indicatorColor="primary"
           textColor="primary"
-          aria-label="scrollable force tabs example"
         >
           <Tab label="Quick" icon={<QuickIcon />} {...a11yProps(0)} />
           <Tab label="Merge" icon={<MergeIcon />} {...a11yProps(2)} />
