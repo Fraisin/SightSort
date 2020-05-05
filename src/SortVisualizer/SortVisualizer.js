@@ -19,6 +19,7 @@ export const MAIN_COLOUR = "#4eccbf";
 export const HIGHLIGHT_COLOUR = "#fad169";
 export const SPECIAL_HIGHLIGHT = "#f0715d";
 export const ANIMATION_SPEED_MS = 5;
+const FINISHED_GREEN = "#78d680";
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
 //Slider.
@@ -107,12 +108,18 @@ export default class SortVisualizer extends React.Component {
     if (currTab === 3) func = Bubble.performVisualization;
     if (currTab === 4) func = Select.performVisualization;
     await func(this.state.array);
-    this.setState({ currentlyAnimating: false });
+    this.setState({ currentlyAnimating: false }, () => this.flashGreen());
   }
 
   //Turn all the bars green for a brief time after sorting.
-  flashGreen() {
+  async flashGreen() {
     var arrayBars = document.getElementsByClassName("arrayBar");
+    for (let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = FINISHED_GREEN;
+    }
+    //Pause for a little bit.
+    await sleep(750);
+    //Turn all the bars back to their original colour.
     for (let i = 0; i < arrayBars.length; i++) {
       arrayBars[i].style.backgroundColor = MAIN_COLOUR;
     }
@@ -246,4 +253,8 @@ function arraysEqual(array1, array2) {
 //Sets the tab index so that the correct sorting method can be chosen.
 export function setCurrTab(index) {
   currTab = index;
+}
+//Pauses for a duration of the given ms.
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
