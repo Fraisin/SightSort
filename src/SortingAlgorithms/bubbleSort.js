@@ -21,6 +21,7 @@ export function bubbleSort(array, visuals) {
 }
 
 export function performVisualization(array) {
+  const promises = []; //array of promises used to determine when visualization is complete
   var visuals = [];
   bubbleSort(array, visuals);
   var arrayBars = document.getElementsByClassName("arrayBar");
@@ -35,18 +36,29 @@ export function performVisualization(array) {
       const barOneStyle = arrayBars[barOneIndex].style;
       const barTwoStyle = arrayBars[barTwoIndex].style;
       let colour = key === "v" ? SV.HIGHLIGHT_COLOUR : SV.MAIN_COLOUR;
-      setTimeout(() => {
-        barOneStyle.backgroundColor = colour;
-        barTwoStyle.backgroundColor = colour;
-      }, i * SV.ANIMATION_SPEED_MS);
+      promises.push(
+        new Promise(resolve => {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = colour;
+            barTwoStyle.backgroundColor = colour;
+            resolve();
+          }, i * SV.ANIMATION_SPEED_MS);
+        })
+      );
     } else {
       // In the case of an 's', we want to change the height of the specified bar to be the new value.
-      setTimeout(() => {
-        var barOneIndex = visuals[i][0];
-        var newHeight = visuals[i][1];
-        var barOneStyle = arrayBars[barOneIndex].style;
-        barOneStyle.height = `${newHeight / (SV.MAX_ARRAY_VALUE / 100)}%`;
-      }, i * SV.ANIMATION_SPEED_MS);
+      promises.push(
+        new Promise(resolve => {
+          setTimeout(() => {
+            var barOneIndex = visuals[i][0];
+            var newHeight = visuals[i][1];
+            var barOneStyle = arrayBars[barOneIndex].style;
+            barOneStyle.height = `${newHeight / (SV.MAX_ARRAY_VALUE / 100)}%`;
+            resolve();
+          }, i * SV.ANIMATION_SPEED_MS);
+        })
+      );
     }
   }
+  return Promise.all(promises);
 }

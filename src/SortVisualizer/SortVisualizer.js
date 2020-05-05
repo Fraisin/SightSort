@@ -69,9 +69,7 @@ export default class SortVisualizer extends React.Component {
     this.refillArray(this.state.currArraySize);
   }
   //Handle changing of the slider that controls the animation speed.
-  handleSpeedSliderChange = (event, newValue) => {
-    console.log(newValue);
-  };
+  handleSpeedSliderChange = (event, newValue) => {};
 
   //Handle changing of the slider that controls the array size.
   handleArraySliderChange = (event, newValue) => {
@@ -82,11 +80,10 @@ export default class SortVisualizer extends React.Component {
   handleNewArrayClick = event => {
     this.refillArray(this.state.currArraySize);
   };
-  //Handle clicking of 'Sort' butotn.
+  //Handle clicking of 'Sort' button which just calls helper method.
   handleSortClick = event => {
     this.setState({ currentlyAnimating: true }, () => this.beginSort());
   };
-
   //Fills the array with 'currArraySize' random elements from 1 -> MAX_ARRAY_VALUE.
   refillArray(length) {
     const array = [];
@@ -103,11 +100,14 @@ export default class SortVisualizer extends React.Component {
 
   //Sorting methods that call their respective animation methods.
   async beginSort() {
-    if (currTab === 0) Quick.performVisualization(this.state.array);
-    if (currTab === 1) Merge.performVisualization(this.state.array);
-    if (currTab === 2) Insert.performVisualization(this.state.array);
-    if (currTab === 3) Bubble.performVisualization(this.state.array);
-    if (currTab === 4) Select.performVisualization(this.state.array);
+    var func;
+    if (currTab === 0) func = Quick.performVisualization;
+    if (currTab === 1) func = Merge.performVisualization;
+    if (currTab === 2) func = Insert.performVisualization;
+    if (currTab === 3) func = Bubble.performVisualization;
+    if (currTab === 4) func = Select.performVisualization;
+    await func(this.state.array);
+    this.setState({ currentlyAnimating: false });
   }
 
   //Turn all the bars green for a brief time after sorting.

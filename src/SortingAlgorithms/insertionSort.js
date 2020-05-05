@@ -25,6 +25,7 @@ export function insertionSort(array, visuals) {
 }
 
 export function performVisualization(array) {
+  const promises = []; //array of promises used to determine when visualization is complete
   var visuals = [];
   insertionSort(array, visuals);
   var arrayBars = document.getElementsByClassName("arrayBar");
@@ -45,18 +46,29 @@ export function performVisualization(array) {
       if (key === "v") colour = SV.HIGHLIGHT_COLOUR;
       if (key === "r") colour = SV.MAIN_COLOUR;
       if (key === "k") colour = SV.SPECIAL_HIGHLIGHT;
-      setTimeout(() => {
-        barOneStyle.backgroundColor = colour;
-        barTwoStyle.backgroundColor = colour;
-      }, i * SV.ANIMATION_SPEED_MS);
+      promises.push(
+        new Promise(resolve => {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = colour;
+            barTwoStyle.backgroundColor = colour;
+            resolve();
+          }, i * SV.ANIMATION_SPEED_MS);
+        })
+      );
     } else {
       // In the case of an 's', we want to change the height of the specified bar to be the new value.
-      setTimeout(() => {
-        var barOneIndex = visuals[i][0];
-        var newHeight = visuals[i][1];
-        var barOneStyle = arrayBars[barOneIndex].style;
-        barOneStyle.height = `${newHeight / (SV.MAX_ARRAY_VALUE / 100)}%`;
-      }, i * SV.ANIMATION_SPEED_MS);
+      promises.push(
+        new Promise(resolve => {
+          setTimeout(() => {
+            var barOneIndex = visuals[i][0];
+            var newHeight = visuals[i][1];
+            var barOneStyle = arrayBars[barOneIndex].style;
+            barOneStyle.height = `${newHeight / (SV.MAX_ARRAY_VALUE / 100)}%`;
+            resolve();
+          }, i * SV.ANIMATION_SPEED_MS);
+        })
+      );
     }
   }
+  return Promise.all(promises);
 }
