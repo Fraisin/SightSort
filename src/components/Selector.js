@@ -77,10 +77,10 @@ export default function Selector() {
           aria-label="scrollable force tabs example"
         >
           <Tab label="Quick" icon={<QuickIcon />} {...a11yProps(0)} />
-          <Tab label="Insertion" icon={<InsertIcon />} {...a11yProps(1)} />
-          <Tab label="Bubble" icon={<BubbleIcon />} {...a11yProps(2)} />
-          <Tab label="Selection" icon={<SelectIcon />} {...a11yProps(3)} />
-          <Tab label="Merge" icon={<MergeIcon />} {...a11yProps(4)} />
+          <Tab label="Merge" icon={<MergeIcon />} {...a11yProps(2)} />
+          <Tab label="Insertion" icon={<InsertIcon />} {...a11yProps(2)} />
+          <Tab label="Bubble" icon={<BubbleIcon />} {...a11yProps(3)} />
+          <Tab label="Selection" icon={<SelectIcon />} {...a11yProps(4)} />
         </Tabs>
       </AppBar>
       <TabPanel className="tab" value={value} index={0}>
@@ -88,20 +88,20 @@ export default function Selector() {
         on the splitting of an array into smaller ones.
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
+        Merge sort is a divide-and-conquer algorithm that breaks the list into
+        several sub-lists and merges those sublists to form a sorted list.
+      </TabPanel>
+      <TabPanel className="tab" value={value} index={2}>
         This is an in-place comparison-based sorting algorithm. Here, a sub-list
         is maintained which is always sorted.
       </TabPanel>
-      <TabPanel className="tab" value={value} index={2}>
+      <TabPanel className="tab" value={value} index={3}>
         This sorting algorithm involves comparing each pair of adjacent elements
         and swapping them if they are not in order.
       </TabPanel>
-      <TabPanel className="tab" value={value} index={3}>
+      <TabPanel className="tab" value={value} index={4}>
         This sorting algorithm involves dividing the list into two parts: the
         sorted part at the left end and the unsorted part at the right end.
-      </TabPanel>
-      <TabPanel className="tab" value={value} index={4}>
-        Merge sort is a divide-and-conquer algorithm that breaks the list into
-        several sub-lists and merges those sublists to form a sorted list.
       </TabPanel>
     </div>
   );

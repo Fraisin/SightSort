@@ -41,7 +41,6 @@ function partition(array, start, end, visuals) {
 export function performVisualization(array) {
   var visuals = [];
   quickSort(array, 0, array.length - 1, visuals);
-  console.log(visuals);
   var arrayBars = document.getElementsByClassName("arrayBar");
   for (let i = 0; i < visuals.length; i++) {
     /* The third element of each visual represents what kind of action to take.

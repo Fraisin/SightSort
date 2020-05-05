@@ -20,6 +20,7 @@ export const SPECIAL_HIGHLIGHT = "#f0715d";
 export const ANIMATION_SPEED_MS = 5;
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
+//Slider.
 const PrettoSlider = withStyles({
   root: {
     color: "#52af77",
@@ -50,6 +51,7 @@ const PrettoSlider = withStyles({
   }
 })(Slider);
 
+//Beginning of SortVisualizer Class.
 export default class SortVisualizer extends React.Component {
   constructor(props) {
     super(props);
@@ -59,10 +61,12 @@ export default class SortVisualizer extends React.Component {
     };
   }
 
+  //Once components are rendered, fill the array randomly.
   componentDidMount() {
     this.refillArray(this.state.currArraySize);
   }
 
+  //Fills the array with 'currArraySize' random elements from 1 -> MAX_ARRAY_VALUE.
   refillArray(length) {
     const array = [];
     for (let i = 0; i < length; i++) {
@@ -76,18 +80,27 @@ export default class SortVisualizer extends React.Component {
     this.setState({ array });
   }
 
+  //Handle changing of the slider.
   handleChange = (event, newValue) => {
     this.setState({ currArraySize: newValue });
     this.refillArray(newValue);
   };
 
+  handleNewArrayClick = event => {
+    this.refillArray(this.state.currArraySize);
+  };
+
+  handleSortClick = event => {
+    this.beginSort();
+  };
+
   //Sorting methods that call their respective animation methods.
   beginSort() {
     if (currTab === 0) Quick.performVisualization(this.state.array);
-    if (currTab === 1) Insert.performVisualization(this.state.array);
-    if (currTab === 2) Bubble.performVisualization(this.state.array);
-    if (currTab === 3) Select.performVisualization(this.state.array);
-    if (currTab === 4) Merge.performVisualization(this.state.array);
+    if (currTab === 1) Merge.performVisualization(this.state.array);
+    if (currTab === 2) Insert.performVisualization(this.state.array);
+    if (currTab === 3) Bubble.performVisualization(this.state.array);
+    if (currTab === 4) Select.performVisualization(this.state.array);
   }
 
   //Tests every implemented sorting algorithm.
@@ -126,6 +139,7 @@ export default class SortVisualizer extends React.Component {
     }
   }
 
+  //Beginning of render method.
   render() {
     const { array } = this.state;
     return (
@@ -149,9 +163,7 @@ export default class SortVisualizer extends React.Component {
             size="large"
             startIcon={<RefreshIcon />}
             className="mainBtn"
-            onClick={() => {
-              this.refillArray(this.state.currArraySize);
-            }}
+            onClick={this.handleNewArrayClick}
           >
             <h3 className="btnHeading">New Array</h3>
           </Button>
@@ -161,9 +173,7 @@ export default class SortVisualizer extends React.Component {
             size="large"
             startIcon={<RefreshIcon />}
             className="mainBtn"
-            onClick={() => {
-              this.beginSort();
-            }}
+            onClick={this.handleSortClick}
           >
             <h3 className="btnHeading">Sort</h3>
           </Button>
