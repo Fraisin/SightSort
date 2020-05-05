@@ -3,6 +3,9 @@
 }
 .arraySizeSlider {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .barContainer {
   width: 95%;
@@ -28,9 +31,8 @@
   margin-left: auto;
   margin-right: auto;
 }
-.speedSlider {
-  height: 95%;
-  display: flex;
+.sliderBtnsWrapper {
+  width: 60%;
 }
 .speedLabelWrapper {
   display: flex;
@@ -38,8 +40,9 @@
   justify-content: center;
   align-items: center;
 }
-.sliderBtnsWrapper {
-  width: 60%;
+.speedSlider {
+  height: 95%;
+  display: flex;
 }
 /** Desktop Styles **/
 @media only screen and (min-width: 961px) {
@@ -50,22 +53,27 @@
 }
 /** Tablet Styles **/
 @media only screen and (min-width: 600px) and (max-width: 960px) {
+  .btnHeading {
+    font-size: 0.8em;
+  }
   .mainBtn {
     width: 40%;
     height: 50px;
   }
-  .btnHeading {
-    font-size: 0.8em;
-  }
 }
 /** Mobile Styles **/
 @media only screen and (max-width: 599px) {
+  .btnHeading {
+    font-size: 0.6em;
+  }
+  .contentContainer {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 100%;
+  }
   .mainBtn {
     width: 45%;
     height: 40px;
-  }
-  .btnHeading {
-    font-size: 0.6em;
   }
   .slider {
     margin-top: 5%;

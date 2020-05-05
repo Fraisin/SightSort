@@ -59,6 +59,7 @@ export default class SortVisualizer extends React.Component {
     this.state = {
       currArraySize: 100,
       array: [],
+      speed: 5,
       currentlyAnimating: false //Represents whether or not a sorting algorithm is currently being animated.
     };
   }
@@ -67,22 +68,23 @@ export default class SortVisualizer extends React.Component {
   componentDidMount() {
     this.refillArray(this.state.currArraySize);
   }
+  //Handle changing of the slider that controls the animation speed.
+  handleSpeedSliderChange = (event, newValue) => {
+    console.log(newValue);
+  };
 
-  //Handle changing of the slider.
-  handleChange = (event, newValue) => {
+  //Handle changing of the slider that controls the array size.
+  handleArraySliderChange = (event, newValue) => {
     this.setState({ currArraySize: newValue });
     this.refillArray(newValue);
   };
-
   //Handle clicking of 'New Array' button.
   handleNewArrayClick = event => {
     this.refillArray(this.state.currArraySize);
   };
-
   //Handle clicking of 'Sort' butotn.
   handleSortClick = event => {
-    //this.setState({ currentlyAnimating: true });
-    this.beginSort();
+    this.setState({ currentlyAnimating: true }, () => this.beginSort());
   };
 
   //Fills the array with 'currArraySize' random elements from 1 -> MAX_ARRAY_VALUE.
@@ -100,13 +102,12 @@ export default class SortVisualizer extends React.Component {
   }
 
   //Sorting methods that call their respective animation methods.
-  beginSort() {
+  async beginSort() {
     if (currTab === 0) Quick.performVisualization(this.state.array);
     if (currTab === 1) Merge.performVisualization(this.state.array);
     if (currTab === 2) Insert.performVisualization(this.state.array);
     if (currTab === 3) Bubble.performVisualization(this.state.array);
     if (currTab === 4) Select.performVisualization(this.state.array);
-    this.flashGreen();
   }
 
   //Turn all the bars green for a brief time after sorting.
@@ -167,7 +168,11 @@ export default class SortVisualizer extends React.Component {
             <Slider
               orientation="vertical"
               defaultValue={30}
+              min={1}
+              max={16}
+              step={0.01}
               aria-label="Speed"
+              onChange={this.handleSpeedSliderChange}
             />
           </div>
           <div className="sliderBtnsWrapper">
@@ -177,9 +182,9 @@ export default class SortVisualizer extends React.Component {
                 valueLabelDisplay="auto"
                 aria-label="Array Size"
                 defaultValue={100}
-                max={500}
                 min={5}
-                onChange={this.handleChange}
+                max={500}
+                onChange={this.handleArraySliderChange}
                 disabled={this.state.currentlyAnimating}
               />
             </div>
