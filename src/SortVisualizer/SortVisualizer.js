@@ -15,7 +15,7 @@ import * as Insert from "../SortingAlgorithms/insertionSort.js";
 import Box from "@material-ui/core/Box";
 import "./SortVisualizer.css";
 
-//Constants.
+//Constants & variables.
 export const MAX_ARRAY_VALUE = 500;
 export const MAIN_COLOUR = "#4eccbf";
 export const HIGHLIGHT_COLOUR = "#fad169";
@@ -24,7 +24,7 @@ export var ANIMATION_SPEED_MS = 5;
 const FINISHED_GREEN = "#8bc9a4";
 var currTab = 0; //Represents the index of the sorting tab that's currently selected.
 
-//Slider.
+//Array size slider.
 const PrettoSlider = withStyles({
   root: {
     color: "#52af77",
@@ -66,7 +66,6 @@ export default class SortVisualizer extends React.Component {
       currentlyAnimating: false //Represents whether or not a sorting algorithm is currently being animated.
     };
   }
-
   //Once components are rendered, fill the array randomly.
   componentDidMount() {
     this.refillArray(this.state.currArraySize);
@@ -84,7 +83,7 @@ export default class SortVisualizer extends React.Component {
   handleNewArrayClick = event => {
     this.refillArray(this.state.currArraySize);
   };
-  //Handle clicking of 'Sort' button which just calls helper method.
+  //Handle clicking of 'Sort' button.
   handleSortClick = event => {
     this.setState({ currentlyAnimating: true }, () => this.beginSort());
   };
@@ -101,7 +100,6 @@ export default class SortVisualizer extends React.Component {
     }
     this.setState({ array });
   }
-
   //Sorting methods that call their respective animation methods.
   async beginSort() {
     var func;
@@ -110,11 +108,10 @@ export default class SortVisualizer extends React.Component {
     if (currTab === 2) func = Insert.performVisualization;
     if (currTab === 3) func = Bubble.performVisualization;
     if (currTab === 4) func = Select.performVisualization;
-    await func(this.state.array);
+    await func(this.state.array); //Wait for the animation to finish before continuing.
     this.setState({ currentlyAnimating: false }, () => this.flashGreen());
   }
-
-  //Turn all the bars green for a brief time after sorting.
+  //Flash all the bars green for a brief time after animation is complete.
   async flashGreen() {
     var arrayBars = document.getElementsByClassName("arrayBar");
     for (let i = 0; i < arrayBars.length; i++) {
@@ -215,7 +212,6 @@ export default class SortVisualizer extends React.Component {
     );
   }
 }
-
 //Generates random integer within the interval [min, max].
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
