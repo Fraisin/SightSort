@@ -12,6 +12,7 @@ SightSort is a web application designed to help visualize various sorting algori
   <img src="/public/controls.png"/>
 </p>
 
+#
 <br>
 
 <p align="center">
@@ -23,14 +24,14 @@ SightSort is a web application designed to help visualize various sorting algori
 <h2>Development</h2>
 
 * Install [Node JS](https://nodejs.org/en/) if necessary
-* Install the ```create-react-app``` [npm package](https://github.com/facebook/create-react-app) with the following command.
+* Install the ```create-react-app``` [npm package](https://github.com/facebook/create-react-app) with the following command:
 ```bash
 npm install -g create-react-app
 ```
 * Clone the repository ```https://github.com/Fraisin/SightSort.git```
 * Go into the project directory and run ```npm install``` to install the required npm packages
 * Run ```npm start``` to launch the application
-* Navigate to ```http://localhost:3000/``` in a brower to view changes in real-time
+* Navigate to ```http://localhost:3000/``` in a browser to view changes in real-time
 
 <h2>Built With</h2>
 
