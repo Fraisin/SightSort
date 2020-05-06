@@ -1,70 +1,25 @@
-(Work in Progress)
+<h1 align="center">
+  SightSort
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SightSort is a web application designed to help visualize various sorting algorithms, including Quicksort, Merge Sort, Insertion Sort, Bubble Sort, and Selection Sort. Visit the project at https://sightsort.netlify.app/.
 
-## Available Scripts
+<h2>Features</h2>
 
-In the project directory, you can run:
+<h2>Development</h2>
 
-### `npm start`
+* Install [Node JS](https://nodejs.org/en/) if necessary
+* Install the ```create-react-app``` npm package with the following command.
+```bash
+npm install -g create-react-app
+```
+* Clone the repository ```https://github.com/Fraisin/SightSort.git```
+* Go into the project directory and run ```npm install``` to install the required npm packages
+* Run ```npm start``` to run the application
+* Navigate to ```http://localhost:3000/``` in a brower to view changes in real-time
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<h2>Built With</h2>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* [ReactJS](https://reactjs.org/)
+* [Create-React-App](https://github.com/facebook/create-react-app)
+* [Material-UI](https://material-ui.com/)
