@@ -222,15 +222,17 @@ export default class SortVisualizer extends React.Component {
               >
                 <h3 className="btnHeading">Sort</h3>
               </Button>
-              <IconButton
-                color="black"
-                size="medium"
-                href="https://github.com/Fraisin/SightSort"
-                target="_blank"
-                aria-label="GitHub Link"
-              >
-                <GitHubIcon />
-              </IconButton>
+              <div className="gitHubLogoWrapper">
+                <IconButton
+                  color="black"
+                  size="medium"
+                  href="https://github.com/Fraisin/SightSort"
+                  target="_blank"
+                  aria-label="GitHub Link"
+                >
+                  <GitHubIcon />
+                </IconButton>
+              </div>
             </div>
           </div>
         </div>
