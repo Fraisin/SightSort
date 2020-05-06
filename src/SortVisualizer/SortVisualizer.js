@@ -3,8 +3,10 @@ import Selector from "../components/Selector";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Autorenew";
 import SortIcon from "@material-ui/icons/Sort";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import * as Merge from "../SortingAlgorithms/mergeSort.js";
 import * as Bubble from "../SortingAlgorithms/bubbleSort.js";
 import * as Quick from "../SortingAlgorithms/quickSort.js";
@@ -220,6 +222,15 @@ export default class SortVisualizer extends React.Component {
               >
                 <h3 className="btnHeading">Sort</h3>
               </Button>
+              <IconButton
+                color="black"
+                size="medium"
+                href="https://github.com/Fraisin/SightSort"
+                target="_blank"
+                aria-label="GitHub Link"
+              >
+                <GitHubIcon />
+              </IconButton>
             </div>
           </div>
         </div>
