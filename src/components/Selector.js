@@ -83,24 +83,49 @@ export default function Selector() {
         </Tabs>
       </AppBar>
       <TabPanel className="tab" value={value} index={0}>
-        QuickSort is one of the most efficient sorting algorithms and is based
-        on the splitting of an array into smaller ones.
+        <p>
+          <span className="bold">Quicksort </span>
+          works by first selecting a ‘pivot’ point, and partitioning the list
+          around this pivot so that all elements smaller than the pivot are
+          before it, and all elements larger are after. It then recursively
+          repeats this process on the unsorted sublist before the pivot and the
+          one after.
+        </p>
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
-        Merge sort is a divide-and-conquer algorithm that breaks the list into
-        several sub-lists and merges those sublists to form a sorted list.
+        <p>
+          <span className="bold">Merge sort </span>repeatedly breaks down the
+          list into smaller sublists until each sublist consists of only one
+          element. Then, these sublists are sorted and recursively{" "}
+          <span className="bold">'merged' </span> with others in a manner that
+          will form a sorted list.
+        </p>
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
-        This is an in-place comparison-based sorting algorithm. Here, a sub-list
-        is maintained which is always sorted.
+        <p>
+          <span className="bold">Insertion sort </span>is similar to how we
+          might sort cards in our hand during a card game. Each unsorted element
+          is <span className="bold">'inserted' </span> into its correct
+          position, growing a sorted list from left to right.
+        </p>
       </TabPanel>
       <TabPanel className="tab" value={value} index={3}>
-        This sorting algorithm involves comparing each pair of adjacent elements
-        and swapping them if they are not in order.
+        <p>
+          <span className="bold">Bubble sort </span> repeatedly compares
+          adjacent elements and swaps their positions if they are not in the
+          intended order. Visually, the largest element will continuously{" "}
+          <span className="bold">'bubble' </span> up to the location where it
+          belongs.
+        </p>
       </TabPanel>
       <TabPanel className="tab" value={value} index={4}>
-        This sorting algorithm involves dividing the list into two parts: the
-        sorted part at the left end and the unsorted part at the right end.
+        <p>
+          <span className="bold">Selection sort </span> continuously{" "}
+          <span className="bold">'selects' </span>
+          the smallest element in the unsorted portion of the list and places it
+          at the beginning. As a result, the list is constantly in two parts -
+          the sorted part at the left, and the unsorted part at the right.
+        </p>
       </TabPanel>
     </div>
   );

@@ -127,43 +127,6 @@ export default class SortVisualizer extends React.Component {
       arrayBars[i].style.backgroundColor = MAIN_COLOUR;
     }
   }
-
-  //Tests every implemented sorting algorithm.
-  testSortingAlgorithms() {
-    this.test(Quick.quickSort, "quick");
-    this.test(Insert.insertionSort, "insert");
-    this.test(Bubble.bubbleSort, "bubble");
-    this.test(Select.selectionSort, "select");
-    this.test(Merge.mergeSort, "merge");
-  }
-
-  //Test for a single sorting algorithm that takes the sorting method and name as parameters.
-  test(func, sortMethod) {
-    var numOfTestIterations = 100;
-    var arrayLength = 500;
-    var visuals = [];
-    for (let i = 0; i < numOfTestIterations; i++) {
-      var testArray = [];
-      for (let j = 0; j < arrayLength; j++) {
-        testArray.push(getRandomInt(-5000, 5000));
-      }
-      var arrayCopy = testArray.slice().sort(function(a, b) {
-        return a - b;
-      });
-      if (sortMethod === "merge")
-        func(testArray, testArray.slice(), 0, testArray.length - 1, visuals);
-      if (
-        sortMethod === "bubble" ||
-        sortMethod === "select" ||
-        sortMethod === "insert"
-      )
-        func(testArray, visuals);
-      if (sortMethod === "quick")
-        func(testArray, 0, testArray.length - 1, visuals);
-      console.log(sortMethod + ": " + arraysEqual(arrayCopy, testArray));
-    }
-  }
-
   //Beginning of render method.
   render() {
     const { array } = this.state;
@@ -224,7 +187,7 @@ export default class SortVisualizer extends React.Component {
               </Button>
               <div className="gitHubLogoWrapper">
                 <IconButton
-                  color="black"
+                  color="default"
                   size="medium"
                   href="https://github.com/Fraisin/SightSort"
                   target="_blank"
@@ -256,14 +219,6 @@ export default class SortVisualizer extends React.Component {
 //Generates random integer within the interval [min, max].
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-//Determines if two arrays are equal for testing purposes.
-function arraysEqual(array1, array2) {
-  if (array1.length !== array2.length) return false;
-  for (let i = 0; i < array1.length; i++) {
-    if (array1[i] !== array2[i]) return false;
-  }
-  return true;
 }
 //Sets the tab index so that the correct sorting method can be chosen.
 export function setCurrTab(index) {
